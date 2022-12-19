@@ -1,0 +1,12 @@
+     /*
+                   if(!empty($_POST['dateLunes']) && !empty($_POST['dateMartes']) && !empty( $_POST['dateMiercoles']) && !empty( $_POST['dateJueves']) && !empty($_POST['dateViernes']) ){
+
+                    $lunes = $_POST['dateLunes'];
+                    $martes = $_POST['dateMartes'];
+                    $miercoles = $_POST['dateMiercoles'];
+                    $jueves = $_POST['dateJueves'];
+                    $viernes = $_POST['dateViernes'];
+
+                    $sql = "UPDATE `ba_fechas` SET Lunes = '$lunes' ,Martes =  '$martes ' ,Miercoles =  '$miercoles ',Jueves =  '$jueves ' ,Viernes =  '$viernes; '";
+                    $connection -> query($sql);
+                   }*/
