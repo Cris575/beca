@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+  
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="Center">
+        <form action="php/agregar.php" method="post" id=formulario>
+            <h1>Formulario</h1>
+            <label for="idEmpleado">Num Control</label>
+            <input name="idEmpleado" type="text" id="idEmpleado" class="ancho" >
+
+            <label for="nombre">Nombre:</label>
+            <input name="nom" type="text" class="ancho">
+
+            <label for="aPaterno">Apellido Paterno:</label>
+            <input name="aPaterno" id="aPaterno" class="ancho">
+
+            <label for="aMaterno">Apellido Materno:</label>
+            <input name="aMaterno" type="text" id="aMaterno" class="ancho">
+
+            <label for="fecha">Fecha de Nacimiento:</label>
+            <input name="fecha" type="date" id="fecha" class="ancho">
+
+            <label for="puesto">Carrera</label>
+            <input name="puesto" type="text" id="puesto" class="ancho">
+
+            <label for="tel">Numero Celular:</label>
+            <input name="tel" type="text" id="tel" placeholder="(Código de área) Número">
+
+            <label for="tel">Motivo de Beca</label>
+            <input name="tel" type="text" id="tel"  style="height: 100px;">
+
+            <!--
+            <div class="genero">
+                <input type="radio" name="genero">
+                <label for="">Femenino</label>
+                <br>
+                <input type="radio" name="genero">
+                <label for="">Masculino</label>
+                <br>
+                <input type="radio" name="genero">
+                <label for="">No Binario</label>
+            </div>-->
+            <div>
+                <br>
+                <button type="submit">Enviar</button>
+                <button type="reset">Restablecer</button>
+            </div>
+        </form>
+    </div>
+    php
+</body>
+
+</html>
