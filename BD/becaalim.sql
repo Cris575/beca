@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 21-12-2022 a las 17:23:08
+-- Tiempo de generación: 28-12-2022 a las 19:33:14
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -20,15 +20,43 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `becaalim`
 --
-CREATE DATABASE IF NOT EXISTS `becaalim` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `becaalim`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
 DROP PROCEDURE IF EXISTS `SP_altaAlumno`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_altaAlumno` (IN `grupo` VARCHAR(1), IN `noFolio` INT, IN `nombre` VARCHAR(90))   INSERT INTO `alumnos` (`numControl`, `nombre`, `aPaterno`, `aMaterno`, `telefono`, `email`, `noFolio`, `grupo`) VALUES (NULL, nombre, '', NULL, '', '', noFolio, grupo)$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_altaAlumno` (IN `_fecha` DATE, IN `_grupo` VARCHAR(1), IN `_folio` INT, IN `_nombre` VARCHAR(90), IN `_L` VARCHAR(30), IN `_M` VARCHAR(30), IN `_X` VARCHAR(30), IN `_J` VARCHAR(30), IN `_V` VARCHAR(30))   BEGIN 
+	DECLARE _existeAlumno int;
+	DECLARE _existeCobro int;
+--  verificar si existe el alumno 
+
+SET _existeAlumno =(SELECT COUNT(*) FROM `alumnos` WHERE `nombre` LIKE _nombre AND `noFolio` = _folio AND `grupo` LIKE _grupo);
+
+IF _existeAlumno >0 THEN 
+--	SELECT 'alumno ya existe'; 
+INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES (_folio, _fecha, _grupo, '12:00', _L);
+set _fecha = date_add(_fecha, interval 1 day);
+INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES (_folio, _fecha, _grupo, '12:00', _M);
+set _fecha = date_add(_fecha, interval 1 day);
+INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES (_folio, _fecha, _grupo, '12:00', _X);
+set _fecha = date_add(_fecha, interval 1 day);
+INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES (_folio, _fecha, _grupo, '12:00', _J);
+set _fecha = date_add(_fecha, interval 1 day);
+INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES (_folio, _fecha, _grupo, '12:00', _V);
+ELSE 
+	INSERT INTO `alumnos` (`numControl`, `nombre`, `aPaterno`, `aMaterno`, `telefono`, `email`, `Foto`, `noFolio`, `grupo`) VALUES (NULL, _nombre, '', NULL, '', '', NULL, _folio, _grupo);
+INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES (_folio, _fecha, _grupo, '12:00', _L);
+set _fecha = date_add(_fecha, interval 1 day);
+INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES (_folio, _fecha, _grupo, '12:00', _M);
+set _fecha = date_add(_fecha, interval 1 day);
+INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES (_folio, _fecha, _grupo, '12:00', _X);
+set _fecha = date_add(_fecha, interval 1 day);
+INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES (_folio, _fecha, _grupo, '12:00', _J);
+set _fecha = date_add(_fecha, interval 1 day);
+INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES (_folio, _fecha, _grupo, '12:00', _V);
+END IF;
+END$$
 
 DELIMITER ;
 
@@ -95,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `alumnos` (
   `aMaterno` varchar(40) DEFAULT NULL,
   `telefono` varchar(15) NOT NULL,
   `email` varchar(60) NOT NULL,
-  `Foto` blob NOT NULL,
+  `Foto` blob,
   `noFolio` int NOT NULL,
   `grupo` varchar(1) NOT NULL,
   UNIQUE KEY `noFolio` (`noFolio`,`grupo`)
@@ -106,8 +134,8 @@ CREATE TABLE IF NOT EXISTS `alumnos` (
 --
 
 INSERT INTO `alumnos` (`numControl`, `nombre`, `aPaterno`, `aMaterno`, `telefono`, `email`, `Foto`, `noFolio`, `grupo`) VALUES
-(NULL, 'CRISTIAN GONZALEZ HERRERA', '', NULL, '', '', '', 0, 'A'),
-(NULL, 'MIGUEL ANGEL TELLES RODRIGUEZ', '', NULL, '', '', '', 1, 'A');
+(NULL, 'CRISTIAN GONZALEZ HERRERA', '', NULL, '', '', NULL, 0, 'A'),
+(NULL, 'MIGUEL ANGEL TELLES RODRIGUEZ', '', NULL, '', '', NULL, 1, 'A');
 
 -- --------------------------------------------------------
 
@@ -170,97 +198,6 @@ CREATE TABLE IF NOT EXISTS `cobro` (
   `estado` varchar(30) DEFAULT NULL,
   UNIQUE KEY `numControl` (`numControl`,`fecha`,`grupo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `cobro`
---
-
-INSERT INTO `cobro` (`numControl`, `fecha`, `grupo`, `hora`, `estado`) VALUES
-('4', '2022-12-12', 'A', '12:00', 'COBRADO'),
-('6', '2022-12-12', 'A', '12:00', 'NO COBRADO'),
-('10', '2022-12-12', 'A', '17:00', 'NO COBRADO'),
-('12', '2022-12-12', 'A', '12:00', 'COBRADO'),
-('16', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('18', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('20', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('24', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('26', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('28', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('42', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('46', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('48', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('52', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('54', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('58', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('62', '2020-10-24', 'A', '12:00', 'NO COBRADO'),
-('4', '2022-12-13', 'A', '12:00', 'NO COBRADO'),
-('6', '2022-12-13', 'A', '12:00', 'NO COBRADO'),
-('10', '2022-12-13', 'A', '12:00', 'NO COBRADO'),
-('12', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('16', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('18', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('20', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('24', '2020-10-25', 'A', '17:00', 'NO COBRADO'),
-('26', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('28', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('42', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('46', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('48', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('52', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('54', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('58', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('62', '2020-10-25', 'A', '12:00', 'NO COBRADO'),
-('4', '2022-12-14', 'A', '12:00', 'COBRADO'),
-('6', '2022-12-14', 'A', '12:00', 'NO COBRADO'),
-('10', '2022-12-14', 'A', '12:00', 'NO COBRADO'),
-('12', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('16', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('18', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('20', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('24', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('26', '2020-10-26', 'A', '17:00', 'NO COBRADO'),
-('28', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('42', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('46', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('48', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('52', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('54', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('58', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('62', '2020-10-26', 'A', '12:00', 'NO COBRADO'),
-('4', '2022-12-15', 'A', '12:00', 'NO COBRADO'),
-('6', '2022-12-15', 'A', '12:00', 'NO COBRADO'),
-('10', '2022-12-15', 'A', '12:00', 'NO COBRADO'),
-('12', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('16', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('18', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('20', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('24', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('26', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('28', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('42', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('46', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('48', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('52', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('54', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('58', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('62', '2020-10-27', 'A', '12:00', 'NO COBRADO'),
-('4', '2022-12-16', 'A', '12:00', 'NO COBRADO'),
-('6', '2022-12-16', 'A', '12:00', 'NO COBRADO'),
-('10', '2022-12-16', 'A', '12:00', 'NO COBRADO'),
-('12', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('16', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('18', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('20', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('24', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('26', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('28', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('42', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('46', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('48', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('52', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('54', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('58', '2020-10-28', 'A', '12:00', 'NO COBRADO'),
-('62', '2020-10-28', 'A', '12:00', 'NO COBRADO');
 
 -- --------------------------------------------------------
 
