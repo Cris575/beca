@@ -23,11 +23,9 @@ if ($varSession == null || $varSession == '' && $varRol == null || $varRol == ''
 </head>
 
 <body>
-    <?php
-    include_once("../Nueva_carpeta/menu.php");
-    ?>
     <center>
-        <h1>Consulta Alumnos A</h1>
+
+        <h1>Consulta Alumnos</h1>
         <table class="table" border="1">
             <thead>
                 <tr>
@@ -61,8 +59,10 @@ if ($varSession == null || $varSession == '' && $varRol == null || $varRol == ''
                     ?>
                 </tr>
                 <?php
+                $grupo = $_GET['grupo'];
+                
                 require_once("conexion.php");
-                $sql = "SELECT noFolio, nombre,grupo FROM `alumnos` WHERE noFolio <= 20 AND grupo = 'A';";
+                $sql = "SELECT noFolio, nombre,grupo FROM `alumnos` WHERE noFolio <= 20 AND grupo = '$grupo';";
                 $res = $connection->query($sql);
                 while ($row = $res->fetch_array()) {
                     $num++;
@@ -101,9 +101,7 @@ if ($varSession == null || $varSession == '' && $varRol == null || $varRol == ''
             </tbody>
         </table>
     </center>
-    <?php
-    include_once("footer.php");
-    ?>
+   
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">

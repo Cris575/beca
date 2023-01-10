@@ -13,10 +13,13 @@
         <?php 
        require_once("conexion.php");
        $numControl = $_POST['numControl'];
-        $sql = "SELECT Foto FROM `alumnos` WHERE numControl = $numControl";
+       $grupo = strtoupper($_POST['grupo']);                    
+
+        $sql = "SELECT Foto FROM `alumnos` WHERE noFolio LIKE $numControl AND grupo LIKE '$grupo'";
         $img = $connection -> query($sql);
         $row = $img -> fetch_array();
         $data = 'data:image/png;base64,'.base64_encode($row['Foto']);
+
         echo "<img src='".$data."'>";
 
        ?>

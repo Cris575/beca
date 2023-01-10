@@ -27,7 +27,7 @@ if ($varSession == null || $varSession == '' && $varRol == null || $varRol == ''
     include_once("../Nueva_carpeta/menu.php");
     ?>
     <center>
-        <h1>Consulta Alumnos A</h1>
+        <h1>Consulta Alumnos B</h1>
         <table class="table" border="1">
             <thead>
                 <tr>
@@ -62,7 +62,7 @@ if ($varSession == null || $varSession == '' && $varRol == null || $varRol == ''
                 </tr>
                 <?php
                 require_once("conexion.php");
-                $sql = "SELECT noFolio, nombre,grupo FROM `alumnos` WHERE noFolio <= 20 AND grupo = 'A';";
+                $sql = "SELECT noFolio, nombre,grupo FROM `alumnos` WHERE noFolio <= 20 AND grupo = 'B';";
                 $res = $connection->query($sql);
                 while ($row = $res->fetch_array()) {
                     $num++;
@@ -74,7 +74,7 @@ if ($varSession == null || $varSession == '' && $varRol == null || $varRol == ''
                 
                 ";
 
-                    $sql2 = "SELECT estado FROM `cobro` WHERE numControl = $num  AND fecha between '2022-09-05' AND '2022-09-09';";
+                    $sql2 = "SELECT estado FROM `cobro` WHERE numControl = $num  AND fecha between '2022-09-12' AND '2022-09-16';";
                     $res2 = $connection->query($sql2);
                     while ($row = $res2->fetch_array()) {
                         

@@ -7,13 +7,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="consulta.php">Grupo A</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="consultaB.php">Grupo B</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="addDate.php">Generar Tabla</a>
+                <a class="nav-link" href="historico.html">Histórico</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="cerrar_Sesion.php">Cerrar sesion</a>

@@ -14,17 +14,31 @@ if ($varSession == null || $varSession== '' && $varRol == null || $varRol== '') 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <title>Document</title>
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input{
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
     <center>
         <form action="aceptado.php" method="POST">
-            <label for="">Num</label>
-            <input type="text" name="numControl">
+            <h1>Sistema de Cobro</h1>
+            <label for="">Numero de control:</label><br>
+            <input  type="number" name="numControl">
             <br>
-            <button type="submit">Buscar</button>
+            <label for="">Grupo:</label><br>
+            <input  type="text" name="grupo">
+            <br>
+            <button class="btn btn-primary" type="submit">Buscar</button>
         </form>
         <div>
             <table border="1">
@@ -40,12 +54,12 @@ if ($varSession == null || $varSession== '' && $varRol == null || $varRol== '') 
                     <?php 
                  require_once("conexion.php");
 
-                 $sql = "SELECT `estado` FROM `cobro` WHERE estado = 'COBRADO'";
+                 $sql = "SELECT `estado` FROM `cobro` WHERE estado = 'Asistió'";
                  $resul = $connection -> query($sql);
          
                  $num =  $resul -> num_rows;
 
-                 $sql = "SELECT `estado` FROM `cobro` WHERE estado = 'NO COBRADO'";
+                 $sql = "SELECT `estado` FROM `cobro` WHERE estado = 'NO'";
                  $resul = $connection -> query($sql);
          
                  $num2 =  $resul -> num_rows;
@@ -57,7 +71,7 @@ if ($varSession == null || $varSession== '' && $varRol == null || $varRol== '') 
             </table>
             <a href="cerrar_Sesion.php">Cerra sesion</a>
         </div>
-        
+
     </center>
 </body>
 

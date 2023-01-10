@@ -16,6 +16,9 @@ div.Center {
 div.genero {
     text-align: left;
 }
+td.registro{
+    text-align: center;
+}
 
 button {
     font-family: 'Silkscreen', cursive;
